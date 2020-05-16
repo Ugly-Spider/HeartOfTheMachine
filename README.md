@@ -26,6 +26,10 @@
 ```
 
 ### 2.训练
+
+一种方式是通过演化算法，在原有网络的基础上进行一次变异，变异系数越大，新网络的表现与原来的差异越大，只要设置合理的规则让更好的网络更容易'存活'下来即可，涉及的主要代码是`var newNetwork = network.Variant(-0.1f, 0.1f);`。
+
+另一种方式是通过BP算法实现，同时提供数据和正确答案，然后根据偏差修正权重。
 ```c#
         var trainArgs = new NeuralNetworkTrainArgs();
         trainArgs.trainingData = ReadTrainingData();//设置数据
@@ -37,7 +41,7 @@
 
 ### 3.获取输出
 ```c#
-var predict = network.Forward(input);
+        var predict = network.Forward(input);
 ```
 
 ## 小车Demo
@@ -74,5 +78,6 @@ var predict = network.Forward(input);
 Mnist的数据为28*28像素的黑白颜色值，我们把它作为神经网络的输入，输入则是1个10维向量，每一项代表是该数字的可能性，如[0, 0.2, 0.1, 0.1, 0, 0.8, 0.2, 0.1, 0.2, 0.1]表示输入为0的可能性为0，1的可能性为0.2, 2的可能性为0.1...，因为索引5对应的概率最大，该向量就代表数字5。
 为了提高训练速度，我这里仅使用了前100个数据（原数据共60000个，全部训练完成至少需要几个小时），而且测试准确率时也采用了和训练一样的数据，目的是验证代码是否正确。
 
-经过100个回合的训练，正确率已经能达到100%了。
+经过100个回合的训练，正确率已经能达到100%了，证明代码ok。
+
 ![accuracy](https://github.com/Ugly-Spider/HeartOfTheMachine/blob/master/Gifs/DigitsRecognition.gif)
