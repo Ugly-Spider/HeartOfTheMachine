@@ -75,16 +75,24 @@ public class Demo_AICar : MonoBehaviour
 
     private NeuralNetwork CreateNewNetwork()
     {
+        //先创建一个神经网络
         var network = new NeuralNetwork();
-//        var d1 = new DenseLayer(new Shape(1, 10, 1), ActivationType.Sigmoid);
-//        network.AddLayer(d1);
+        //创建一个全连接层，输出形状为(1, 10, 1)，激活函数为Sigmoid
+        //var d1 = new DenseLayer(new Shape(1, 10, 1), ActivationType.Sigmoid);
+        //network.AddLayer(d1);
+        //创建一个全连接层，输出形状为(1, 2, 1)，注意这里是最后一层，输入形状要和你需要的输出对应，激活函数为Sigmoid
         var d2 = new DenseLayer(new Shape(1, 2, 1), ActivationType.Sigmoid);
         network.AddLayer(d2);
         
+        //初始化参数
         var initArgs = new NetworkInitializeArgs();
+        //输入形状 你的输入数据形状，这里是小车的demo，输入为射线的数量
         initArgs.inputShape = new Shape(1, rayNum, 1);
+        //权重的初始化范围 weight = Random.Range(-0.1f, 0.1f)
         initArgs.initWeightRange = (-0.1f, 0.1f);
+        //偏执项的初始化范围 bias = Random.Range(-0.1f, 0.1f)
         initArgs.initBiasRange = (-0.1f, 0.1f);
+        //初始化
         network.Initialize(initArgs);
         return network;
     }
